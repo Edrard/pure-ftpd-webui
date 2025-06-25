@@ -92,24 +92,24 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 						$result = mysqli_query ($link, "SELECT * FROM userlist WHERE id=$id");
 						$array = mysqli_fetch_array ($result);
 						// Проверяем были ли внесены какие-то изменения
-						if (($user != $array[user]) || (isset ($pass)) || ($language != $array[language])) {
+						if (($user != $array['user']) || (isset ($pass)) || ($language != $array['language'])) {
 							// Если изменено имя пользователя, вносим изменения в базу
-							if (($user != $array[user]) && isset ($id)) {
+							if (($user != $array['user']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE userlist SET user='$user' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$ewu_edit_loginok</strong></p>";}
 								else {echo "<p><strong>$ewu_edit_loginerror</strong></p>";}
 							}
 							// Если изменен пароль пользователя, вносим изменения в базу
-							if (isset ($pass)) { 
+							if (isset ($pass)) {
 								$pass = md5($pass);
-								if (($pass != $array[pass]) && isset ($id)) {
+								if (($pass != $array['pass']) && isset ($id)) {
 									$result = mysqli_query ($link, "UPDATE userlist SET pass='$pass' WHERE id='$id'");
 									if ($result == 'true') {echo "<p><strong>$ewu_edit_passwdok</strong></p>";}
 									else {echo "<p><strong>$ewu_edit_passwderror</strong></p>";}
 								}
 							}
 							// Если изменён язык пользователя, вносим изменения в базу
-							if (($language != $array[language]) && isset ($id)) {
+							if (($language != $array['language']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE userlist SET language='$language' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$ewu_edit_languageok</strong></p>";}
 								else {echo "<p><strong>$ewu_edit_languageerror</strong></p>";}

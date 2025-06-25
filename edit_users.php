@@ -181,7 +181,7 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 						// Если разрешённый IP-адрес не был задан - выставляем значение по умолчанию
 						if ($ipaccess == '') {
 							$ipaccess = $permitted_ip;}
-						
+
 						// Если размер квоты не был задан - выставляем значение по умолчанию
 						if ($quotasize == '') {
 							$quotasize = $quota_size;
@@ -194,7 +194,7 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 
 						// Если все нужные поля заполнены, добавляем пользователя в базу pureftpd
 						if (isset ($User) && isset($status) && isset($Password) && isset($Uid) && isset($Gid) && isset ($Dir) && isset ($DLBandwidth) && isset ($ULBandwidth) && isset ($ipaccess) && isset ($quotasize) && isset ($quotafiles)) {
-							$result = mysqli_query ($link, "INSERT INTO ftpd (User,status,Password,Uid,Gid,Dir,ULBandwidth,DLBandwidth,ipaccess,QuotaSize,QuotaFiles) VALUES ('$User','$status',md5('$Password'),'$Uid','$Gid','$Dir','$ULBandwidth','$DLBandwidth','$ipaccess','$quotasize','$quotafiles')");
+							$result = mysqli_query ($link, "INSERT INTO ftpd (User,status,Password,Uid,Gid,Dir,ULBandwidth,DLBandwidth,ipaccess,QuotaSize,QuotaFiles) VALUES ('$User','$status','$Password','$Uid','$Gid','$Dir','$ULBandwidth','$DLBandwidth','$ipaccess','$quotasize','$quotafiles')");
 							if ($result == 'true') {echo "<p><strong>$um_add_presultok</strong></p>";}
 							else {echo "<p><strong>$um_add_presulterror</strong></p>";}
 						}
@@ -242,7 +242,7 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 						$array = mysqli_fetch_array ($result);
 
 						// Проверяем были ли внесены какие-то изменения
-						if (($Dir != $array[Dir]) || ($User != $array[User]) || ($status != $array[status]) || (isset ($Password)) || ($ULBandwidth != $array[ULBandwidth]) || ($DLBandwidth != $array[DLBandwidth]) || ($ipaccess != $array[ipaccess]) || ($Uid != $array['Uid']) || ($Uid != $array['Uid']) || ($quotasize != $array[QuotaSize]) || ($quotafiles != $array[QuotaFiles])) {
+						if (($Dir != $array['Dir']) || ($User != $array['User']) || ($status != $array['status']) || (isset ($Password)) || ($ULBandwidth != $array['ULBandwidth']) || ($DLBandwidth != $array['DLBandwidth']) || ($ipaccess != $array['ipaccess']) || ($Uid != $array['Uid']) || ($Uid != $array['Uid']) || ($quotasize != $array['QuotaSize']) || ($quotafiles != $array['QuotaFiles'])) {
 
 							if (($Uid != $array['Uid']) && isset ($id)) {
                                                                 $result = mysqli_query ($link, "UPDATE ftpd SET Uid='$Uid' WHERE id='$id'");
@@ -259,21 +259,21 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 
 
 							// Если изменена папка пользователя, вносим изменения в базу
-							if (($Dir != $array[Dir]) && isset ($id)) {
+							if (($Dir != $array['Dir']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET Dir='$Dir' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$um_edit_folderok</strong></p>";}
 								else {echo "<p><strong>$um_edit_foldererror</strong></p>";}
 
 							}
 							// Если изменено имя пользователя, вносим изменения в базу
-							if (($User != $array[User]) && isset ($id)) {
+							if (($User != $array['User']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET User='$User' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$um_edit_loginok</strong></p>";}
 								else {echo "<p><strong>$um_edit_loginerror</strong></p>";}
 							}
 
 							// Если изменён статус пользователя, вносим изменения в базу
-							if (($status != $array[status]) && isset ($id)) {
+							if (($status != $array['status']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET status='$status' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$um_edit_statusok</strong></p>";}
 								else {echo "<p><strong>$um_edit_statuserror</strong></p>";}
@@ -281,33 +281,33 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 
 							// Если изменён пароль пользователя, вносим изменения в базу
 							if (isset ($Password)) {$Password = md5($Password);
-								if (($Password != $array[Password]) && isset ($id)) {
+								if (($Password != $array['Password']) && isset ($id)) {
 									$result = mysqli_query ($link, "UPDATE ftpd SET Password='$Password' WHERE id='$id'");
 									if ($result == 'true') {echo "<p><strong>$um_edit_passwdok</strong></p>";}
 									else {echo "<p><strong>$um_edit_passwderror</strong></p>";}}
 							}
 
 							// Если изменено ограничение скорости загрузки, вносим изменения в базу
-							if (($ULBandwidth != $array[ULBandwidth]) && isset ($id)) {
+							if (($ULBandwidth != $array['ULBandwidth']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET ULBandwidth='$ULBandwidth' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$um_edit_ullimitok</strong></p>";}
 								else {echo "<p><strong>$um_edit_ullimiterror</strong></p>";}
 							}
 
 							// Если изменено ограничение скорости скачивания, вносим изменения в базу
-							if (($DLBandwidth != $array[DLBandwidth]) && isset ($id)) {
+							if (($DLBandwidth != $array['DLBandwidth']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET DLBandwidth='$DLBandwidth' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$um_edit_dllimitok</strong></p>";}
 								else {echo "<p><strong>$um_edit_dllimiterror</strong></p>";}
 							}
 							// Если изменён разрешенный IP адрес, вносим изменения в базу
-							if (($ipaccess != $array[ipaccess]) && isset ($id)) {
+							if (($ipaccess != $array['ipaccess']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET ipaccess='$ipaccess' WHERE id='$id'");
 								if ($result == 'true') {echo "<p><strong>$um_edit_permipok</strong></p>";}
 								else {echo "<p><strong>$um_edit_permiperror</strong></p>";}
 							}
 							// Если изменён размер квоты, вносим изменения в базу
-							if (($quotasize != $array[QuotaSize]) && isset ($id)) {
+							if (($quotasize != $array['QuotaSize']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET QuotaSize='$quotasize' WHERE id='$id'");
 								if ($result == 'true') {
 									echo "<p><strong>$um_edit_quotasizeok</strong></p>";
@@ -315,7 +315,7 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 							else {echo "<p><strong>$um_edit_quotasizeerror</strong></p>";}
 							}
 							// Если изменён размер квоты, вносим изменения в базу
-							if (($quotafiles != $array[QuotaFiles]) && isset ($id)) {
+							if (($quotafiles != $array['QuotaFiles']) && isset ($id)) {
 								$result = mysqli_query ($link, "UPDATE ftpd SET QuotaFiles='$quotafiles' WHERE id='$id'");
 								if ($result == 'true') {
 									echo "<p><strong>$um_edit_quotafilesok</strong></p>";
@@ -375,7 +375,7 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 					while ($myrow = mysqli_fetch_array ($result));
 
 						echo("	</tbody></table>");
-											
+
 
 						echo("</br></br><table width='95%' border='0' align='center' cellpadding='0' cellspacing='0'><tr><td align='right'>
 								<form name='edit' method='post' action='$PHP_SELF'>
@@ -390,7 +390,7 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 					else {
 						$result = mysqli_query ($link, "SELECT * FROM ftpd WHERE id=$id");
 						$myrow = mysqli_fetch_array ($result);
-						if ($myrow[status] == 0) {
+						if ($myrow['status'] == 0) {
 							$select = "<option value='0' selected='selected'>inactive</option><option value='1'>active</option>";
 						}
 						else {
@@ -422,12 +422,12 @@ echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 								</p>
 								<p>
                                                                         <label>Uid</br>
-                                                                        <INPUT value="$myrow[Uid]" type='text' name='Uid' id='Uid'>
+                                                                        <INPUT value="$myrow[Uid]" type='text' name='Uid' value='2221' id='Uid'>
                                                                         </label>
                                                                 </p>
                                                                 <p>
                                                                         <label>Gid</br>
-                                                                        <INPUT value="$myrow[Gid]" type='text' name='Gid' id='Gid'>
+                                                                        <INPUT value="$myrow[Gid]" type='text' name='Gid' value='2221' id='Gid'>
                                                                         </label>
                                                                 </p>
 
