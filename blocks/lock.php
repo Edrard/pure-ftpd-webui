@@ -15,10 +15,10 @@ if (!isset($_SERVER['PHP_AUTH_USER']))
 }
 
 else {
-        if (!get_magic_quotes_gpc()) {
+        #if (!get_magic_quotes_gpc()) {
                 $_SERVER['PHP_AUTH_USER'] = mysqli_escape_string($link, $_SERVER['PHP_AUTH_USER']);
                 $_SERVER['PHP_AUTH_PW'] = mysqli_escape_string($link, $_SERVER['PHP_AUTH_PW']);
-        }
+        #}
 
         $query = "SELECT pass FROM userlist WHERE user='".$_SERVER['PHP_AUTH_USER']."'";
         $lst = @mysqli_query($link, $query);
